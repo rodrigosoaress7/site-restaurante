@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Cardápio Digital | Restaurante</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f8f9fa;
+      text-align: center;
+      margin: 0;
+    }
+
+    h1 {
+      background: #d62828;
+      color: white;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .item {
+      background: white;
+      margin: 15px auto;
+      padding: 15px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    button {
+      background: #2a9d8f;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #carrinho {
+      background: white;
+      margin: 20px auto;
+      padding: 15px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    #finalizar {
+      background: #264653;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Cardápio Digital</h1>
+<p>Faça seu pedido online</p>
+<div class="container">
+
+  <div class="item">
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd" width="100%" style="border-radius:10px;">  <h3>X-Burguer</h3>
+  <p>R$ 20</p>
+  <button onclick="addItem('X-Burguer', 20)">Adicionar</button>
+</div>
+
+  <div class="item">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRUa-HS8Mh4N0OGgHI5W1Z48xYjXS-Gwv0QdPHybljhw&s=10" width="100%" style="border-radius:10px;">
+  <h3>Pizza Calabresa</h3>
+  <p>R$ 35</p>
+  <button onclick="addItem('X-Burguer', 20)">Adicionar</button>
+</div>
+
+  <div class="item">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR35TcL5Fv7T-_6KpQom0o8Ya1Yf85rCZHZwQ6UHgBbJA&s=10" width="100%" style="border-radius:10px;">
+  <h3>Coca-Cola</h3>
+  <p>R$ 6</p>
+  <button onclick="addItem('X-Burguer', 20)">Adicionar</button>
+</div>
+
+  <div id="carrinho">
+    <h3>Seu Pedido</h3>
+    <ul id="lista"></ul>
+    <p><strong>Total: R$ <span id="total">0</span></strong></p>
+    <button id="finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
+  </div>
+
+</div>
+
+<script>
+  let pedido = [];
+  let total = 0;
+
+  function addItem(nome, preco) {
+    pedido.push({nome, preco});
+    total += preco;
+    atualizarCarrinho();
+  }
+
+  function atualizarCarrinho() {
+    let lista = document.getElementById("lista");
+    lista.innerHTML = "";
+
+    pedido.forEach(item => {
+      let li = document.createElement("li");
+      li.textContent = item.nome + " - R$ " + item.preco;
+      lista.appendChild(li);
+    });
+
+    document.getElementById("total").textContent = total;
+  }
+
+  function finalizarPedido() {
+    if (pedido.length === 0) {
+      alert("Seu pedido está vazio!");
+      return;
+    }
+
+    let mensagem = "Olá, quero pedir:\n\n";
+
+    pedido.forEach(item => {
+      mensagem += "- " + item.nome + " - R$ " + item.preco + "\n";
+    });
+
+    mensagem += "\nTotal: R$ " + total;
+
+    let numero = "5599999999999"; // TROCAR PELO NUMERO DO RESTAURANTE
+    let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensagem);
+
+    window.open(url, "_blank");
+  }
+</script>
+
+</body>
+</html>
